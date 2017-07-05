@@ -1,9 +1,8 @@
 # pyradiomics-extension Version 1.0
-# Author: Zhenwei Shi, Maastro
 
-# pyradiomics-extension is developed based on the latest pyradiomics v1.2.
+## pyradiomics-extension is developed based on the latest pyradiomics v1.2.
 
-# advantages: 
+## advantages: 
 	1. pyradiomics-extension is allowed users input original DICOM files and RTstruture;
 	2. computation of radiomics features on specific ROI in RTstruture;
 	3. semi-automatic ROI name matching
@@ -18,3 +17,13 @@ Input: four parameters stored in "UserInputFile.txt". Note that, Users must prov
 	
 Output: the default output of current version of pyradiomics-extension is in RDF format, which is based on Radiomics Ontology (RO).
 		
+
+### Developers
+ - [Zhenwei Shi](https://github.com/zhenweishi)<sup>1,2</sup>
+ 
+<sup>1</sup>Department of Radiation Oncology (MAASTRO Clinic), Maastricht, The Netherlands,
+<sup>2</sup>GROW-School for Oncology and Developmental Biology, Maastricht University Medical Center, Maastricht, The Netherlands,
+
+### Contact
+
+[Zhenwei Shi, pyradiomics-extension email](zhenwei.shi@maastro.nl).
