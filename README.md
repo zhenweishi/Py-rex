@@ -8,7 +8,7 @@
 
 ### Usage:
 
-1. install [pyradiomics] (https://github.com/Radiomics/pyradiomics)
+1. install [pyradiomics](https://github.com/Radiomics/pyradiomics)
 2. Download pyradiomics-extension in the sub-directory of pyardiomics
 3. provide input parameters in "UserInputFile.txt" (see below input) and parameters of pyradiomics in "Params.yaml"
 4. execute MainScript.py
@@ -23,7 +23,7 @@ Input: four parameters of pyradiomics-extension are in "UserInputFile.txt". Note
 3. Output_path. Local path of output
 4. ROI name (e.g., [Gg][Tt][Vv][-][1])
 	
-Output: the default output of pyradiomics-extension V1.0 is in [Resource Description Framework] (https://en.wikipedia.org/wiki/Resource_Description_Framework) (RDF) format.
+Output: the default output of pyradiomics-extension V1.0 is in [Resource Description Framework](https://en.wikipedia.org/wiki/Resource_Description_Framework) (RDF) format.
 		
 
 ### Developers
