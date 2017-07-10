@@ -29,6 +29,7 @@ Output: the default output of pyradiomics-extension V1.0 is in [Resource Descrip
 ### Developers
  - [Zhenwei Shi](https://github.com/zhenweishi)<sup>1,2</sup>
  - [Alberto Traverso]<sup>1,2</sup>
+ - [Zhen Zhou]<sup>1,2</sup>
  - [Leonard Wee]<sup>1,2</sup>
  - [Andre Dekker]<sup>1,2</sup>
  
