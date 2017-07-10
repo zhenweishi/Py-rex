@@ -18,7 +18,7 @@ import Pyradiomics_output
 #ROI_name
 #######################################
 
-inputFile = 'inputFile.txt'
+inputFile = 'UserInputFile.txt'
 lines=[]
 f = open(inputFile,'r')
 for line in f:
