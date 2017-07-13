@@ -11,6 +11,7 @@ def miaWrapper(computationDataJson, paramsFile, outputPath):
         computationDataJsonObject = json.load(computationDataJsonFile)
     
     images = computationDataJsonObject['images']
+    images = sortImages(images)
     
     ctImage = images['CT'][0]
     ctImagePath = ctImage['location']
@@ -23,6 +24,24 @@ def miaWrapper(computationDataJson, paramsFile, outputPath):
     roiName = volumesOfInterest[0]['rois'][0]
    
     PyradiomicsWrapper.performRadiomicsComputation(ctDirectory, rtStructDirectory, roiName, outputPath, paramsFile)
+    
+def sortImages(images):
+    for (modality, modalityImages) in images.iteritems():
+        if len(modalityImages) != 0:
+            currentImageDirectory = os.path.dirname(modalityImages[0]['location'])
+            newImageDirectory = os.path.join(currentImageDirectory, modality);
+            os.mkdir(newImageDirectory)
+            for modalityImage in modalityImages:
+                print modalityImage
+                currentImageLocation = modalityImage['location']
+                filename = os.path.basename(currentImageLocation);
+                newImageLocation = os.path.join(newImageDirectory, filename)
+                os.rename(currentImageLocation, newImageLocation)
+                modalityImage['location'] = newImageLocation
+    print images
+    return images;
+    
+    
     
         
 if __name__ == "__main__":
