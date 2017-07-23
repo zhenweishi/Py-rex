@@ -7,17 +7,23 @@ Created on Tue Mar 07 12:37:50 2017
 import DCM_ImgRT_Reader
 import RadiomicsFeatureWithParams
 import Pyradiomics_output
-#import rdflib
-#from rdflib import Graph
+'''
 
-# Read input file
+Usage: two modes 
+(1) reading DICOM path and handling multiple ROI names via MIA
+(2) reading pathes of DICOM file and output via 'UserInputFile.txt' and handling multiple ROI names
+    via ROI_match function
+
+'''
+
+'''
+Read input file
 ############ the format of input file:
 #DICOM image path\n
 #DICOM-RT path\n
 #RDF output path\n
 #ROI_name
-#######################################
-
+'''
 inputFile = 'UserInputFile.txt'
 lines=[]
 f = open(inputFile,'r')
