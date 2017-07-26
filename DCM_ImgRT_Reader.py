@@ -19,7 +19,7 @@ import re
 
 #class DcmRTstruct_Reader:
 def ROI_ref(rtstruct_path,ROI_name):
-    mask_vol = load_scan(rtstruct_path)
+    mask_vol = Read_RTSTRUCT(rtstruct_path)
     M= mask_vol[0]
     for i in range(len(M.StructureSetROISequence)):
         if str(ROI_name)==M.StructureSetROISequence[i].ROIName:
@@ -28,7 +28,7 @@ def ROI_ref(rtstruct_path,ROI_name):
     return int(ROI_number)
 
 def match_ROIid(rtstruct_path,ROI_number): 
-    mask_vol = load_scan(rtstruct_path)
+    mask_vol = Read_RTSTRUCT(rtstruct_path)
     M= mask_vol[0]                                           
     for j in range(len(M.StructureSetROISequence)):
 		if ROI_number == M.ROIContourSequence[j].RefdROINumber:
@@ -36,7 +36,7 @@ def match_ROIid(rtstruct_path,ROI_number):
     return j
 	
 def ROI_match(ROI,rtstruct_path):
-    mask_vol=load_scan(rtstruct_path)
+    mask_vol=Read_RTSTRUCT(rtstruct_path)
     M=mask_vol[0]
     target = []
     for i in range(0,len(M.StructureSetROISequence)):
@@ -52,10 +52,22 @@ def ROI_match(ROI,rtstruct_path):
     print '------------------------------------'
     return target
 
-def load_scan(path):
-    scans = [dicom.read_file(path + '\\' + s) for s in os.listdir(path)]
-    scans.sort(key = lambda x: int(x.InstanceNumber))  
-    return scans
+def Read_scan(path):
+    scan = [dicom.read_file(path + '\\' + s) for s in os.listdir(path)]
+    scan.sort(key = lambda x: int(x.InstanceNumber))  
+    return scan
+
+def Read_RTSTRUCT(path):
+    scan = [dicom.read_file(path + '\\' + s) for s in os.listdir(path)] 
+    return scan
+
+def Read_CTscan(json_CT):
+    img_list = []
+    for i in range(len(json_CT)):
+        img_list.append(str(json_CT[i]['location']))
+    Imgs = [dicom.read_file(s) for s in img_list]
+    Imgs.sort(key = lambda x: int(x.InstanceNumber))  
+    return Imgs
 
 def poly2mask(vertex_row_coords, vertex_col_coords, shape):
     fill_row_coords, fill_col_coords = draw.polygon(vertex_row_coords, vertex_col_coords, shape)
@@ -75,12 +87,12 @@ def get_pixels(scan):
     image += np.int16(intercept)    
     return np.array(image, dtype=np.int16)
 
-	
 def Img_Bimask(img_path,rtstruct_path,ROI_name):
 	# Volume of DICOM files and RTstruct files
     print 'Loading scans and RTstruct ......'
-    img_vol=load_scan(img_path)
-    mask_vol=load_scan(rtstruct_path)
+
+    img_vol = Read_scan(img_path)
+    mask_vol=Read_RTSTRUCT(rtstruct_path)
 	# Slices all have the same basic information including slice size, patient position, etc.
     L=img_vol[0]
     LP=get_pixels(img_vol)
