@@ -3,7 +3,7 @@
 from __future__ import print_function
 
 import logging
-import os
+#import os
 import six
 import radiomics
 from radiomics import featureextractor

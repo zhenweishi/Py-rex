@@ -1,4 +1,4 @@
-C:/Users/zhenwei.shi/CT
-C:/Users/zhenwei.shi/RTSTRUCT
-C:/Users/zhenwei.shi/PyradiomicsOutput
+C:/Users/zhenwei.shi/Desktop/DICOM/12345/DICOM/CT
+C:/Users/zhenwei.shi/Desktop/DICOM/12345/DICOM/RTSTRUCT
+C:\Users\zhenwei.shi\Desktop\Pyradiomics-V1.2\Pyradiomics_Extension\PyradiomicsOutput
 [Gg][Tt][Vv][-][1]

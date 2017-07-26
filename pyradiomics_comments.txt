@@ -1,0 +1,20 @@
+Thanks for sharing the repository. 
+
+I don't have a lot of time to look at this now, but you should 
+definitely not sort your DICOM files by InstanceNumber - you are not 
+at all guaranteed to have a correct geometric order, and 
+InstanceNumber can be missing altogether in the input dataset: 
+
+https://github.com/zhenweishi/pyradiomics-extension/blob/master/DCM_ImgRT_Reader.py#L55 
+
+This is one example why we don't want to incorporate DICOM parsing in 
+the library. It is best done by the tools specifically developed for 
+this purpose. Errors like this are very dangerous, since you will have 
+absolutely no indication your features are calculated from an 
+inconsistent spatial location based on the calculated feature values. 
+
+
+
+
+
+

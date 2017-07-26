@@ -1,6 +1,7 @@
 import DCM_ImgRT_Reader
 import RadiomicsFeatureWithParams
 import Pyradiomics_output
+import sys
 
 
 def performRadiomicsComputation(ctPath, rtStructPath, roiName, outputPath, paramsFile):
