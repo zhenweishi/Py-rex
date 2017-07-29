@@ -1,4 +1,9 @@
-## import rdflib and some namespace
+"""
+###############################
+@author: zhenwei.shi, Maastro##
+###############################
+"""
+
 from rdflib import Graph, Literal
 from rdflib.namespace import RDF,Namespace
 from datetime import datetime
@@ -34,5 +39,5 @@ def RDF_OUTPUT(featureVector,rdf_exportDir,ROI_name):
 		# print ns
 	##Create a rdf file for storing output
 	g.serialize(rdf_exportDir + "/RF_"+ ROI_name + '_'+ datetime.now().strftime('%Y%m%d_%H_%M_%S') +".ttl", format="n3")
+	print "-----------------------------------------------------------"
 	print "Done"
-   
