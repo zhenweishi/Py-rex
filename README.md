@@ -29,9 +29,10 @@ Input: four parameters of Py-rex are in "UserInputFile.txt". Note that, Users mu
 Output: the default output of Py-rex V1.2 is in [Resource Description Framework](https://en.wikipedia.org/wiki/Resource_Description_Framework) (RDF) format.
 		
 ### Example
+We provide a test dataset in `./example`. This dataset has a series of CT scans of a lung cancer patient and the corresponding RTSTRUCT.
 
 ```
-python MainScript.py
+python ./MainScript.py
 ```
 
 
