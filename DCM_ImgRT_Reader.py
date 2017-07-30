@@ -20,22 +20,25 @@ import re
 
 
 #class DcmRTstruct_Reader:
-def ROI_ref(rtstruct_path,ROI_name):
+def match_ROIid(rtstruct_path,ROI_name):
     mask_vol = Read_RTSTRUCT(rtstruct_path)
     M= mask_vol[0]
     for i in range(len(M.StructureSetROISequence)):
         if str(ROI_name)==M.StructureSetROISequence[i].ROIName:
             ROI_number = M.StructureSetROISequence[i].ROINumber
             break
-    return int(ROI_number)
-
-def match_ROIid(rtstruct_path,ROI_number): 
-    mask_vol = Read_RTSTRUCT(rtstruct_path)
-    M= mask_vol[0]                                           
-    for j in range(len(M.StructureSetROISequence)):
-		if ROI_number == M.ROIContourSequence[j].RefdROINumber:
+    for ROI_id in range(len(M.StructureSetROISequence)):
+		if ROI_number == M.ROIContourSequence[ROI_id].RefdROINumber:
 			break
-    return j
+    return ROI_id
+
+#def match_ROIid(rtstruct_path,ROI_number): 
+#    mask_vol = Read_RTSTRUCT(rtstruct_path)
+#    M= mask_vol[0]                                           
+#    for j in range(len(M.StructureSetROISequence)):
+#		if ROI_number == M.ROIContourSequence[j].RefdROINumber:
+#			break
+#    return j
 	
 def ROI_match(ROI,rtstruct_path):
     mask_vol=Read_RTSTRUCT(rtstruct_path)
@@ -91,7 +94,7 @@ def get_pixels(scan):
 
 def Img_Bimask(img_path,rtstruct_path,ROI_name):
 	# Volume of DICOM files and RTstruct files
-    print 'Loading scans and RTstruct ......'
+    print 'Loading SCANs and RTSTRUCT ......'
 
     img_vol = Read_scan(img_path)
     mask_vol=Read_RTSTRUCT(rtstruct_path)
@@ -108,8 +111,8 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name):
     xres=np.array(IM.PixelSpacing[0])
     yres=np.array(IM.PixelSpacing[1])
 	
-    ROI_number = ROI_ref(rtstruct_path,ROI_name)
-    ROI_id = match_ROIid(rtstruct_path,ROI_number)
+    ROI_id = match_ROIid(rtstruct_path,ROI_name)
+#    ROI_id = match_ROIid(rtstruct_path,ROI_number)
 
     for k in range(len(M.ROIContourSequence[ROI_id].ContourSequence)):    
         Cpostion_rt = M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData[2]

@@ -1,8 +1,17 @@
 INFO:radiomics.featureextractor: Calculating features with label: 1
-DEBUG:radiomics.imageoperations: Cropping to size [60 75 15]
+DEBUG:radiomics.imageoperations: Cropping to size [52 38  8]
 DEBUG:radiomics.shape: Calculating features
 INFO:radiomics.featureextractor: Applying filter: 'Original' with settings: {'normalize': False, 'additionalInfo': True, 'verbose': False, 'binWidth': 25, 'enableCExtensions': True, 'label': 1, 'interpolator': 'sitkBSpline', 'resampledPixelSpacing': None, 'removeOutliers': None, 'weightingNorm': None, 'padDistance': 5, 'normalizeScale': 1}
-DEBUG:radiomics.imageoperations: Cropping to size [60 75 15]
+DEBUG:radiomics.imageoperations: Cropping to size [52 38  8]
+DEBUG:radiomics.firstorder: Calculating features
+DEBUG:radiomics.glcm: Calculating features
+DEBUG:radiomics.glrlm: Calculating features
+DEBUG:radiomics.glszm: Calculating features
+INFO:radiomics.featureextractor: Calculating features with label: 1
+DEBUG:radiomics.imageoperations: Cropping to size [52 38  8]
+DEBUG:radiomics.shape: Calculating features
+INFO:radiomics.featureextractor: Applying filter: 'Original' with settings: {'normalize': False, 'additionalInfo': True, 'verbose': False, 'binWidth': 25, 'enableCExtensions': True, 'label': 1, 'interpolator': 'sitkBSpline', 'resampledPixelSpacing': None, 'removeOutliers': None, 'weightingNorm': None, 'padDistance': 5, 'normalizeScale': 1}
+DEBUG:radiomics.imageoperations: Cropping to size [52 38  8]
 DEBUG:radiomics.firstorder: Calculating features
 DEBUG:radiomics.glcm: Calculating features
 DEBUG:radiomics.glrlm: Calculating features

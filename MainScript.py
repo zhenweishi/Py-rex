@@ -28,8 +28,8 @@ if os.path.isfile('Params.yaml'):
 else:
     print 'Error: pyradiomics params setting file is needed!'
 
-if os.path.isfile('Userinputfile1.txt'):
-    inputFile = 'Userinputfile1.txt'
+if os.path.isfile('Userinputfile.txt'):
+    inputFile = 'Userinputfile.txt'
     lines=[]
     f = open(inputFile,'r')
     for line in f:
