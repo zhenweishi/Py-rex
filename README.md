@@ -30,9 +30,9 @@ Output: the default output of Py-rex V1.2 is in [Resource Description Framework]
 		
 ### Example
 
-'''
+```
 python MainScript.py
-'''
+```
 
 
 ### Developers
