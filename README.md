@@ -34,7 +34,10 @@ We provide a test dataset in `./example`. This dataset has a series of CT scans 
 ```
 python ./MainScript.py
 ```
+### License
 
+Py-rex may not be used for commercial purposes. This package is freely available to browse, download, and use for scientific 
+and educational purposes as outlined in the Creative Commons Attribution 3.0 Unported License (https://creativecommons.org/licenses/by/3.0/).
 
 ### Developers
  - [Zhenwei Shi](https://github.com/zhenweishi)<sup>1,2</sup>
