@@ -4,29 +4,27 @@ import os.path
 import PyradiomicsWrapper
 from shutil import copyfile
 
+
 def miaWrapper(computationDataJson, paramsFile, outputPath):
     with open(computationDataJson) as computationDataJsonFile:
         computationDataJsonObject = json.load(computationDataJsonFile)
-    
+
     images = computationDataJsonObject['images']
-    modalities = ['CT', 'RTSTRUCT']
-    if checkIfCopyIsNeeded(images, modalities):
-        images = sortImages(images, modalities)
+    images = sortImages(images, ['CT', 'RTSTRUCT'])
 
     ctImage = images['CT'][0]
     ctImagePath = ctImage['location']
     ctDirectory = os.path.dirname(ctImagePath)
-    
+
     rtStructPath = images['RTSTRUCT'][0]['location']
     rtStructDirectory = os.path.dirname(rtStructPath)
-    
+
     volumesOfInterest = computationDataJsonObject['volumesOfInterest']
     roiName = volumesOfInterest[0]['rois'][0]
-   
+
     PyradiomicsWrapper.performRadiomicsComputation(ctDirectory, rtStructDirectory, roiName, outputPath, paramsFile)
 
-# The best option would be to change the code in such a way that separate folders for each modality are not needed.
-# For now, this method restructures the folder hierarchy to accommondate the use of different folders.
+
 def checkIfCopyIsNeeded(images, modalities):
     modality = modalities[0]
     modalityImages = images[modality]
@@ -35,24 +33,28 @@ def checkIfCopyIsNeeded(images, modalities):
     newImageDirectory = os.path.join(currentImageDirectory, modality)
     if os.path.basename(currentImageDirectory) in modalities or os.path.isdir(newImageDirectory):
         return False
-    elif not(os.path.basename(currentImageDirectory) in modalities or os.path.isdir(newImageDirectory)):
+    elif not (os.path.basename(currentImageDirectory) in modalities or os.path.isdir(newImageDirectory)):
         return True
+
 
 def sortImages(images, modalities):
     for modality in modalities:
-        modalityImages = images[modality]  
+        modalityImages = images[modality]
         if len(modalityImages) != 0:
             currentImageDirectory = os.path.dirname(modalityImages[0]['location'])
             newImageDirectory = os.path.join(currentImageDirectory, modality)
-            os.mkdir(newImageDirectory)
+            if not os.path.isdir(newImageDirectory):
+                os.mkdir(newImageDirectory)
             for modalityImage in modalityImages:
                 currentImageLocation = modalityImage['location']
                 filename = os.path.basename(currentImageLocation)
                 newImageLocation = os.path.join(newImageDirectory, filename)
-                copyfile(currentImageLocation, newImageLocation)
+                if not os.path.isfile(newImageLocation):
+                    copyfile(currentImageLocation, newImageLocation)
                 modalityImage['location'] = newImageLocation
     return images
-    
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MIA wrapper for pyradiomics computations')
     parser.add_argument('computationDataJson', help='Path of computationData JSON file', type=str)
