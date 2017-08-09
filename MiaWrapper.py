@@ -1,18 +1,19 @@
 import argparse
 import json
 import os.path
-
 import PyradiomicsWrapper
-
+from shutil import copyfile
 
 def miaWrapper(computationDataJson, paramsFile, outputPath):
-    
     with open(computationDataJson) as computationDataJsonFile:
         computationDataJsonObject = json.load(computationDataJsonFile)
     
     images = computationDataJsonObject['images']
-    images = sortImages(images, ['CT', 'RTSTRUCT'])
-    
+    modalities = ['CT', 'RTSTRUCT']
+    copy = checkIfCopyIsNeeded(images, modalities)
+    if copy:
+        images = sortImages(images, modalities)
+
     ctImage = images['CT'][0]
     ctImagePath = ctImage['location']
     ctDirectory = os.path.dirname(ctImagePath)
@@ -24,8 +25,18 @@ def miaWrapper(computationDataJson, paramsFile, outputPath):
     roiName = volumesOfInterest[0]['rois'][0]
    
     PyradiomicsWrapper.performRadiomicsComputation(ctDirectory, rtStructDirectory, roiName, outputPath, paramsFile)
-    
-    
+
+def checkIfCopyIsNeeded(images, modalities):
+    modality = modalities[0]
+    modalityImages = images[modality]
+
+    currentImageDirectory = os.path.dirname(modalityImages[0]['location'])
+    newImageDirectory = os.path.join(currentImageDirectory, modality)
+    if os.path.basename(currentImageDirectory) in modalities or os.path.isdir(newImageDirectory):
+        return False
+    elif not(os.path.basename(currentImageDirectory) in modalities or os.path.isdir(newImageDirectory)):
+        return True
+
 def sortImages(images, modalities):
     for modality in modalities:
         modalityImages = images[modality]  
@@ -37,7 +48,7 @@ def sortImages(images, modalities):
                 currentImageLocation = modalityImage['location']
                 filename = os.path.basename(currentImageLocation)
                 newImageLocation = os.path.join(newImageDirectory, filename)
-                os.rename(currentImageLocation, newImageLocation)
+                copyfile(currentImageLocation, newImageLocation)
                 modalityImage['location'] = newImageLocation
     return images
     
