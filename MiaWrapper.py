@@ -10,8 +10,7 @@ def miaWrapper(computationDataJson, paramsFile, outputPath):
     
     images = computationDataJsonObject['images']
     modalities = ['CT', 'RTSTRUCT']
-    copy = checkIfCopyIsNeeded(images, modalities)
-    if copy:
+    if checkIfCopyIsNeeded(images, modalities):
         images = sortImages(images, modalities)
 
     ctImage = images['CT'][0]
