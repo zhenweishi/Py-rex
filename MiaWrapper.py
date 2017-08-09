@@ -24,19 +24,8 @@ def miaWrapper(computationDataJson, paramsFile, outputPath):
 
     PyradiomicsWrapper.performRadiomicsComputation(ctDirectory, rtStructDirectory, roiName, outputPath, paramsFile)
 
-
-def checkIfCopyIsNeeded(images, modalities):
-    modality = modalities[0]
-    modalityImages = images[modality]
-
-    currentImageDirectory = os.path.dirname(modalityImages[0]['location'])
-    newImageDirectory = os.path.join(currentImageDirectory, modality)
-    if os.path.basename(currentImageDirectory) in modalities or os.path.isdir(newImageDirectory):
-        return False
-    elif not (os.path.basename(currentImageDirectory) in modalities or os.path.isdir(newImageDirectory)):
-        return True
-
-
+# The best option would be to change the code in such a way that separate folders for each modality are not needed.
+# For now, this method restructures the folder hierarchy to accommodate the use of different folders.
 def sortImages(images, modalities):
     for modality in modalities:
         modalityImages = images[modality]
