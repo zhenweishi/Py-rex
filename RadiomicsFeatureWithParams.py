@@ -98,7 +98,7 @@ def CalculationRun(imageName,maskName,paramsFile):
 	# tqdmProgressbar()
 	# clickProgressbar()
 	print("Active features:")
-	for cls, features in six.iteritems(extractor.enabledFeatures):
+	for cls, features in six.iteritems(extractor._enabledFeatures):
 	#  if len(features) == 0:
 	  if not features:
 		features = extractor.getFeatureNames(cls)
