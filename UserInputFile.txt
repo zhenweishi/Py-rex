@@ -1,4 +1,4 @@
 .\example\CT
 .\example\RTSTRUCT
-.\PyradiomicsOutput
+.\Pyradiomics\Output
 [Ss][Uu][Vv]
