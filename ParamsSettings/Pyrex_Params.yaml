@@ -1,0 +1,8 @@
+PATH:
+  Img_path: '.\data\CT\CT_IMG'
+  RT_path: '.\data\CT\RTSTRUCT'
+  exportDir: '.\RFstore'
+ROI:
+- '[Ss][Uu][Vv]'
+export_format:
+- rdf

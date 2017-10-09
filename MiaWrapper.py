@@ -1,11 +1,11 @@
 import argparse
 import json
 import os.path
-import PyradiomicsWrapper
+import PyrexWrapper
 from shutil import copyfile
 
 
-def miaWrapper(computationDataJson, paramsFile, outputPath):
+def miaWrapper(computationDataJson, paramsFile, outputPath,output_format):
     with open(computationDataJson) as computationDataJsonFile:
         computationDataJsonObject = json.load(computationDataJsonFile)
 
@@ -22,7 +22,7 @@ def miaWrapper(computationDataJson, paramsFile, outputPath):
     volumesOfInterest = computationDataJsonObject['volumesOfInterest']
     roiName = volumesOfInterest[0]['rois'][0]
 
-    PyradiomicsWrapper.performRadiomicsComputation(ctDirectory, rtStructDirectory, roiName, outputPath, paramsFile)
+    PyrexWrapper.performRadiomicsComputation(ctDirectory, rtStructDirectory, roiName, outputPath, paramsFile,output_format)
 
 # The best option would be to change the code in such a way that separate folders for each modality are not needed.
 # For now, this method restructures the folder hierarchy to accommodate the use of different folders.
