@@ -26,10 +26,12 @@ def match_ROIid(rtstruct_path,ROI_name):
     for i in range(len(M.StructureSetROISequence)):
         if str(ROI_name)==M.StructureSetROISequence[i].ROIName:
             ROI_number = M.StructureSetROISequence[i].ROINumber
+#            print ROI_number
             break
     for ROI_id in range(len(M.StructureSetROISequence)):
-		if ROI_number == M.ROIContourSequence[ROI_id].RefdROINumber:
-			break
+        if ROI_number == M.ROIContourSequence[ROI_id].RefdROINumber:
+#            print ROI_number
+            break
     return ROI_id
 
 	
@@ -52,20 +54,16 @@ def ROI_match(ROI,rtstruct_path):
 
 def Read_scan(path):
     scan = [dicom.read_file(os.path.join(path, s), force=True) for s in os.listdir(path)]
-    scan.sort(key = lambda x: int(x.InstanceNumber))  
+    try:
+        #scan.sort(key = lambda x: int(x.InstanceNumber))
+        scan.sort(key = lambda x: int(x.ImagePositionPatient[2]))
+    except:
+        print "AttributeError: Maybe Dataset does not have attribute 'InstanceNumber'"
     return scan
 
 def Read_RTSTRUCT(path):
     scan = [dicom.read_file(os.path.join(path, s), force=True)for s in os.listdir(path)] 
     return scan
-
-def Read_CTscan(json_CT):
-    img_list = []
-    for i in range(len(json_CT)):
-        img_list.append(str(json_CT[i]['location']))
-    Imgs = [dicom.read_file(s) for s in img_list]
-    Imgs.sort(key = lambda x: int(x.InstanceNumber))  
-    return Imgs
 
 def poly2mask(vertex_row_coords, vertex_col_coords, shape):
     fill_row_coords, fill_col_coords = draw.polygon(vertex_row_coords, vertex_col_coords, shape)
@@ -92,7 +90,7 @@ def get_pixels(scan):
 
 def Img_Bimask(img_path,rtstruct_path,ROI_name):
 	# Volume of DICOM files and RTstruct files
-    print 'Loading SCANs and RTSTRUCT ......'
+    #print 'Loading SCANs and RTSTRUCT ......'
 
     img_vol = Read_scan(img_path)
     mask_vol=Read_RTSTRUCT(rtstruct_path)
@@ -102,17 +100,17 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name):
     M=mask_vol[0]
     num_slice=len(img_vol)
     
-    print 'Creating binary mask ......'
+    #print 'Creating binary mask ......'
 
     mask=np.zeros([num_slice, IM.Rows, IM.Columns],dtype=np.uint8)
     
     xres=np.array(IM.PixelSpacing[0])
     yres=np.array(IM.PixelSpacing[1])
-	
     ROI_id = match_ROIid(rtstruct_path,ROI_name)
+
     
 #Check DICOM file Modality
-    if IM.Modality == 'CT':
+    if IM.Modality == 'CT' or 'PT':
 		for k in range(len(M.ROIContourSequence[ROI_id].ContourSequence)):    
 			Cpostion_rt = M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData[2]
 			
@@ -197,4 +195,4 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name):
     
     Img=sitk.GetImageFromArray(IM_P.astype(np.float32))
     Mask=sitk.GetImageFromArray(mask)
-    return Img, Mask
+    return Img, Mask,IM.Modality,IM.StudyInstanceUID

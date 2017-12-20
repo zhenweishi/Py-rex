@@ -20,7 +20,7 @@
 setting:
   binWidth: 25
   label: 1
-  interpolator: 'sitkBSpline' # This is an enumerated value, here None is not allowed
+  interpolator: # This is an enumerated value, here None is not allowed
   resampledPixelSpacing: # This disables resampling, as it is interpreted as None, to enable it, specify spacing in x, y, z as [x, y , z]
   weightingNorm: # If no value is specified, it is interpreted as None
 
@@ -31,47 +31,8 @@ imageType:
 # Featureclasses, from which features must be calculated. If a featureclass is not mentioned, no features are calculated
 # for that class. Otherwise, the specified features are calculated, or, if none are specified, all are calculated.
 featureClass:
-  shape:  # disable redundant Compactness 1 and Compactness 2 features by specifying all other shape features
-    - 'Volume'
-    - 'SurfaceArea'
-    - 'SurfaceVolumeRatio'
-    - 'Sphericity'
-    - 'SphericalDisproportion'
-    - 'Maximum3DDiameter'
-    - 'Maximum2DDiameterSlice'
-    - 'Maximum2DDiameterColumn'
-    - 'Maximum2DDiameterRow'
-    - 'MajorAxis'
-    - 'MinorAxis'
-    - 'LeastAxis'
-    - 'Elongation'
-    - 'Flatness'
-  firstorder: [] # specifying an empty list has the same effect as specifying nothing.
+  shape:   # disable redundant Compactness 1 and Compactness 2 features by specifying all other shape features
+  firstorder:  # specifying an empty list has the same effect as specifying nothing.
   glcm:  # Disable SumAverage by specifying all other GLCM features available
-    - 'Autocorrelation'
-    - 'JointAverage'
-    - 'ClusterProminence'
-    - 'ClusterShade'
-    - 'ClusterTendency'
-    - 'Contrast'
-    - 'Correlation'
-    - 'DifferenceAverage'
-    - 'DifferenceEntropy'
-    - 'DifferenceVariance'
-    - 'Dissimilarity'
-    - 'JointEnergy'
-    - 'JointEntropy'
-    - 'Homogeneity1'
-    - 'Homogeneity2'
-    - 'Imc1'
-    - 'Imc2'
-    - 'Idm'
-    - 'Idmn'
-    - 'Id'
-    - 'Idn'
-    - 'InverseVariance'
-    - 'MaximumProbability'
-    - 'SumEntropy'
-    - 'SumSquares'
   glrlm: # for lists none values are allowed, in this case, all features are enabled
   glszm:

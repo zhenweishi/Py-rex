@@ -102,14 +102,14 @@ def CalculationRun(imageName,maskName,paramsFile):
 	#  if len(features) == 0:
 	  if not features:
 		features = extractor.getFeatureNames(cls)
-	  for f in features:
-		print(f)
-		print(getattr(extractor.featureClasses[cls], 'get%sFeatureValue' % f).__doc__)
+	#  for f in features:
+	#	print(f)
+	#	print(getattr(extractor.featureClasses[cls], 'get%sFeatureValue' % f).__doc__)
 
-	print("Calculating features")
+	#print("Calculating features")
 	featureVector = extractor.execute(imageName, maskName)
 
-	for featureName in featureVector.keys():
-	  print("Computed %s: %s" % (featureName, featureVector[featureName]))
+	#for featureName in featureVector.keys():
+	#  print("Computed %s: %s" % (featureName, featureVector[featureName]))
 	  
 	return featureVector

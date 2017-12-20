@@ -8,6 +8,7 @@ import PyrexWithParams
 import Pyrex_output
 import os
 import yaml
+import csv
 
 '''
 reading pathes of DICOM file and output via 'Pyrex_Params.ymal' and handling multiple ROI names
@@ -45,6 +46,7 @@ try:
     exportDir = p['PATH']['exportDir']
     ROI = p['ROI'][0]
     export_format = p['export_format'][0]
+    export_name = p['export_name'][0]
 except:
 	print 'Error: Could not find params file of Pyrex!'
 
@@ -52,8 +54,10 @@ except:
 target = DCM_ImgRT_Reader.ROI_match(ROI,RT_path)
 print target
 
+#PatientID = os.listdir(myWorkingDirectory)
+PatientID = [1]
 for i in range(len(target)):
-    print ('Calculating Radiomics Features on %s '% target[i])
-    Image,Mask= DCM_ImgRT_Reader.Img_Bimask(Img_path,RT_path,target[i]) #create image array and binary mask
+    Image,Mask,Modality,StudyInstanceUID = DCM_ImgRT_Reader.Img_Bimask(Img_path,RT_path,target[i]) #create image array and binary mask
     featureVector = PyrexWithParams.CalculationRun(Image,Mask,paramsFile) #compute radiomics
-    Pyrex_output.RFeature_store(featureVector,exportDir,target[i],export_format) #store radiomics locally with a specific format
+    featureVector.update({'patient':PatientID,'contour':target[i]}) #add patient ID and contour
+    Pyrex_output.RFeature_store(featureVector,exportDir,PatientID,target[i],export_format,Modality,StudyInstanceUID,export_name) #store radiomics locally with a specific format   
