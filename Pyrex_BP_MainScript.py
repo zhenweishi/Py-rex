@@ -40,13 +40,10 @@ try:
         p = yaml.load(params)
         
     #read parameters from configuration file.
-    #Img_path = p['PATH']['Img_path']  
-    #RT_path = p['PATH']['RT_path']
     myWorkingDirectory = p['PATH']['myWorkingDirectory']
     collectionURL = p['collectionURL'][0]
     myProjectID = p['myProjectID'][0]
     exportDir = p['PATH']['exportDir']
-#    ROI = p['ROI'][0]
     export_format = p['export_format'][0]
     export_name = p['export_name'][0]
 except:
@@ -57,9 +54,6 @@ PatientID = os.listdir(myWorkingDirectory)
 #xnat_collection(myWorkingDirectory,collectionURL,myProjectID)
 Img_path,RT_path = ParseStructure(myWorkingDirectory) #detect the path of Image and RTstruct
 
-#create a log file
-#LOG_FILENAME = 'RIDER.log'
-#logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 #match the input ROI to the ROI in RTstruct
 for i in range(0,len(RT_path)):
@@ -84,5 +78,4 @@ for i in range(0,len(RT_path)):
            else:      
                Pyrex_output.RFeature_store(featureVector,exportDir,PatientID[i],target[k],export_format,Modality,StudyInstanceUID,export_name) #store radiomics locally with a specific format   
        except:
-   #       logging.debug('Error: Could not find %s' % target[k])
            print 'Error: Could not find', target[k]    

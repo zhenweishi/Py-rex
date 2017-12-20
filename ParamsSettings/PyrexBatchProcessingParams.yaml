@@ -5,9 +5,7 @@ collectionURL:
 - 'https://xnat.bmia.nl'
 myProjectID:
 - 'stwstrategyrdr'
-ROI:
-- '[Ss][Uu][Vv]'
 export_format:
 - csv
 export_name:
-- 'pyrex_bpZW.csv'
+- 'pyrex_example.csv'
