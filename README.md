@@ -1,22 +1,25 @@
 ## Py-rex (Pyradiomics extension) Version 1.3
 
-This is an open-source python package for extension of [pyradiomics](https://github.com/Radiomics/pyradiomics) on both input and output sides.
+This is an open-source python package for [pyradiomics](https://github.com/Radiomics/pyradiomics) extension on both input and output sides.
 With this pacakge we aim to allow users to use origial DICOM file and RTSTRUCT for radiomics calculation. 
 
 ### Features
 1. Py-rex is allowed users employ original DICOM files and RTstruture;
 2. Internal module for creation of ROI binary mask;
-3. computation of radiomics features on a specific ROI;
-4. semi-automatic approach to handle multiple ROI names;
-5. output radiomics features in different formats (e.g., RDF, csv, xml and so on) with related ontologies (e.g., Radiomics Ontology and Radiation Oncology Ontology).
+3. Computation of radiomic features on a specific ROI;
+4. Semi-automatic approach to handle multiple ROI names;
+5. Radiomic features in different formats (e.g., rdf, text and csv) with related ontologies (e.g., [Radiomics Ontology](https://bioportal.bioontology.org/ontologies/ROO) and [Radiation Oncology Ontology](https://bioportal.bioontology.org/ontologies/RO)).
+6. Applicable for CT and MRI.
+7. Allow batch processing.
 
-### Usage
+### Using Py-rex
 
-1. install [pyradiomics](https://github.com/Radiomics/pyradiomics)
+1. Install [pyradiomics](https://github.com/Radiomics/pyradiomics)
 2. Clone/Download Py-rex to the sub-directory of pyardiomics-master
-3. Fill in configuration file "./pyradiomics-master/Py-rex/ParamsSettings/Pyrex_Params.yaml"
-4. Execute HelloPyrex.py
-5. Results are saved in "./RFstore"
+3. Execute: `python -m pip install -r pyrex_requirements.txt'
+4. Fill in configuration file "./pyradiomics-master/Py-rex-master/ParamsSettings/Pyrex_Params.yaml"
+5. Execute `HelloPyrex.py`
+6. Results are saved in "./RFstore"
 
 		
 ### Example
