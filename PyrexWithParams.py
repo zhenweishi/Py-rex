@@ -7,7 +7,7 @@ zhenwei.shi, Maastro##
 from __future__ import print_function
 
 import logging
-#import os
+import os
 import six
 import radiomics
 from radiomics import featureextractor
@@ -69,7 +69,7 @@ def clickProgressbar():
 
   radiomics.progressReporter = progressWrapper
 
-# Get some test data
+
 
 def CalculationRun(imageName,maskName,paramsFile):
 	if imageName is None or maskName is None:  # Something went wrong, in this case PyRadiomics will also log an error
@@ -97,11 +97,12 @@ def CalculationRun(imageName,maskName,paramsFile):
 
 	# tqdmProgressbar()
 	# clickProgressbar()
-	print("Active features:")
+	print("Calculating features:")
 	for cls, features in six.iteritems(extractor._enabledFeatures):
 	#  if len(features) == 0:
 	  if not features:
-		features = extractor.getFeatureNames(cls)
+		features = [f for f, deprecated in six.iteritems(extractor.getFeatureNames(cls)) if not deprecated]
+		#features = extractor.getFeatureNames(cls)
 	#  for f in features:
 	#	print(f)
 	#	print(getattr(extractor.featureClasses[cls], 'get%sFeatureValue' % f).__doc__)

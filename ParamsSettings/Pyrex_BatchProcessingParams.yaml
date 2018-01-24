@@ -1,0 +1,26 @@
+#This is an example of a parameters file for Pyrex
+# It is written according to the YAML-convention (www.yaml.org) and is checked by the code for consistency.
+#
+# Parameter category:
+#   Setting Name: <value>
+#
+# The five parameter categories are:
+# - path:
+#    - myWorkingDirectory is the root directory where DICOM files are saved.
+#    - exportDir is the directory where results are exported.
+# - collectionURL: specify the URL of cloud repository, like 'XNAT'.
+# - myProject: specify the name of dataset on cloud reposity, like 'stwstrategyrdr'
+# - export_format: specify the format of output, such as rdf or csv.
+# - export_name: specify the name of result file.
+
+path:
+  myWorkingDirectory: 'C:\XNAT'
+  exportDir: 'C:\tmp\RF_store'
+collectionURL:
+- 'https://xnat.bmia.nl'
+myProjectID:
+- 'stwstrategyrdr'
+export_format:
+- csv
+export_name:
+- 'Hello_PyrexBP.csv'

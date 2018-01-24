@@ -52,7 +52,8 @@ def xnat_collection(myWorkingDirectory,collectionURL,myProjectID):
 	for item in test:
 		if item.endswith(".zip"):
 			os.remove(os.path.join(dir, item))
-            
+
+# Parsing dataset directory	
 def ParseStructure(myWorkingDirectory):
     img_dirs = []
     rtss_dirs = []

@@ -36,3 +36,5 @@ featureClass:
   glcm:  # Disable SumAverage by specifying all other GLCM features available
   glrlm: # for lists none values are allowed, in this case, all features are enabled
   glszm:
+#  ngtdm:
+#  gldm:

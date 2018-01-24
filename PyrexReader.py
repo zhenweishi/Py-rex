@@ -3,12 +3,12 @@
 @author: zhenwei.shi, Maastro##
 ###############################
 Usage:
-import DCM_ImgRT_Reader
+import PyrexReader
 	
 img_path = '.\CTscan'
 rtstruct_path = '.\RTstruct'
 ROI = Region Of Interest
-Img,Mask = DCM_ImgRT_Reader.Img_Bimask(img_path,rtstruct_path,ROI)
+Img,Mask = PyrexReader.Img_Bimask(img_path,rtstruct_path,ROI)
 
 """
 
@@ -195,4 +195,4 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name):
     
     Img=sitk.GetImageFromArray(IM_P.astype(np.float32))
     Mask=sitk.GetImageFromArray(mask)
-    return Img, Mask,IM.Modality,IM.StudyInstanceUID
+    return Img, Mask
