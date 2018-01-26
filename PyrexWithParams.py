@@ -72,45 +72,44 @@ def clickProgressbar():
 
 
 def CalculationRun(imageName,maskName,paramsFile):
-	if imageName is None or maskName is None:  # Something went wrong, in this case PyRadiomics will also log an error
-	  print('Error getting testcase!')
-	  exit()
+    if imageName is None or maskName is None:  # Something went wrong, in this case PyRadiomics will also log an error
+        print('Error getting testcase!')
+        exit()
 
-	# Regulate verbosity with radiomics.verbosity
-	# radiomics.setVerbosity(logging.INFO)
+    # Regulate verbosity with radiomics.verbosity
+    # radiomics.setVerbosity(logging.INFO)
 
-	# Get the PyRadiomics logger (default log-level = INFO
-	logger = radiomics.logger
-	logger.setLevel(logging.DEBUG)  # set level to DEBUG to include debug log messages in log file
+    # Get the PyRadiomics logger (default log-level = INFO
+    logger = radiomics.logger
+    logger.setLevel(logging.DEBUG)  # set level to DEBUG to include debug log messages in log file
 
-	# Write out all log entries to a file
-	handler = logging.FileHandler(filename='testLog.txt', mode='w')
-	formatter = logging.Formatter("%(levelname)s:%(name)s: %(message)s")
-	handler.setFormatter(formatter)
-	logger.addHandler(handler)
+    # Write out all log entries to a file
+    handler = logging.FileHandler(filename='testLog.txt', mode='w')
+    formatter = logging.Formatter("%(levelname)s:%(name)s: %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
-	# Initialize feature extractor using the settings file
-	extractor = featureextractor.RadiomicsFeaturesExtractor(paramsFile)
+    # Initialize feature extractor using the settings file
+    extractor = featureextractor.RadiomicsFeaturesExtractor(paramsFile)
 
-	# Uncomment one of these functions to show how PyRadiomics can use the 'tqdm' or 'click' package to report progress when
-	# running in full python mode. Assumes the respective package is installed (not included in the requirements)
+    # Uncomment one of these functions to show how PyRadiomics can use the 'tqdm' or 'click' package to report progress when
+    # running in full python mode. Assumes the respective package is installed (not included in the requirements)
 
-	# tqdmProgressbar()
-	# clickProgressbar()
-	print("Calculating features:")
-	for cls, features in six.iteritems(extractor._enabledFeatures):
-	#  if len(features) == 0:
-	  if not features:
-		features = [f for f, deprecated in six.iteritems(extractor.getFeatureNames(cls)) if not deprecated]
+    # tqdmProgressbar()
+    # clickProgressbar()
+    print("Calculating features:")
+    for cls, features in six.iteritems(extractor._enabledFeatures):
+        if not features:
+            features = [f for f, deprecated in six.iteritems(extractor.getFeatureNames(cls)) if not deprecated]
 		#features = extractor.getFeatureNames(cls)
-	#  for f in features:
-	#	print(f)
-	#	print(getattr(extractor.featureClasses[cls], 'get%sFeatureValue' % f).__doc__)
+    #  for f in features:
+    #	print(f)
+    #	print(getattr(extractor.featureClasses[cls], 'get%sFeatureValue' % f).__doc__)
 
-	#print("Calculating features")
-	featureVector = extractor.execute(imageName, maskName)
+    #print("Calculating features")
+    featureVector = extractor.execute(imageName, maskName)
 
-	#for featureName in featureVector.keys():
-	#  print("Computed %s: %s" % (featureName, featureVector[featureName]))
+    #for featureName in featureVector.keys():
+    #  print("Computed %s: %s" % (featureName, featureVector[featureName]))
 	  
-	return featureVector
+    return featureVector

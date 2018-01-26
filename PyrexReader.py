@@ -44,12 +44,12 @@ def ROI_match(ROI,rtstruct_path):
             target.append(M.StructureSetROISequence[i].ROIName)		
     if len(target)==0:
         for j in range(0,len(M.StructureSetROISequence)):
-            print M.StructureSetROISequence[j].ROIName
+            print(M.StructureSetROISequence[j].ROIName)
             break
-        print 'Input ROI is: '
+        print('Input ROI is: ')
         ROI_name = raw_input()
         target.append(ROI_name)
-    print '------------------------------------'
+    print('------------------------------------')
     return target
 
 def Read_scan(path):
@@ -58,7 +58,7 @@ def Read_scan(path):
         #scan.sort(key = lambda x: int(x.InstanceNumber))
         scan.sort(key = lambda x: int(x.ImagePositionPatient[2]))
     except:
-        print "AttributeError: Maybe Dataset does not have attribute 'InstanceNumber'"
+        print("AttributeError: Maybe Dataset does not have attribute 'InstanceNumber'")
     return scan
 
 def Read_RTSTRUCT(path):
@@ -111,19 +111,19 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name):
     
 #Check DICOM file Modality
     if IM.Modality == 'CT' or 'PT':
-		for k in range(len(M.ROIContourSequence[ROI_id].ContourSequence)):    
-			Cpostion_rt = M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData[2]
-			
-			for i in range(num_slice):
-				if Cpostion_rt == img_vol[i].ImagePositionPatient[2]:
-					sliceOK = i
-					break
+        for k in range(len(M.ROIContourSequence[ROI_id].ContourSequence)):    
+            Cpostion_rt = M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData[2]
+            
+            for i in range(num_slice):
+                if Cpostion_rt == img_vol[i].ImagePositionPatient[2]:
+                    sliceOK = i
+                    break
 					
-			x=[]
-			y=[]
-			z=[]
-			
-			m=M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData
+            x=[]
+            y=[]
+            z=[]
+            
+            m=M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData
                          
     elif IM.Modality == 'MR':
         slice_0 = img_vol[0]
@@ -143,25 +143,25 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name):
         
         transform_matrix = np.linalg.inv(transform_matrix)
         for s in M.ROIContourSequence[ROI_id].ContourSequence:    
-			Cpostion_rt = np.r_[s.ContourData[:3], 1] # the ROI point to get slice number from
-													  # in homogenous coordinates
+            Cpostion_rt = np.r_[s.ContourData[:3], 1] # the ROI point to get slice number from
+            										  # in homogenous coordinates
 
-			roi_slice_nb = int(transform_matrix.dot(Cpostion_rt)[2]) # the slice number according to the 
-																	 # inverse transform
-			for i in range(num_slice):
-				print(roi_slice_nb, i)
-				if roi_slice_nb == i:
-					sliceOK = i
-					break
-			x=[]
-			y=[]
-			z=[]			                            
-			m=s.ContourData
+            roi_slice_nb = int(transform_matrix.dot(Cpostion_rt)[2]) # the slice number according to the 
+														 # inverse transform
+            for i in range(num_slice):
+                print(roi_slice_nb, i)
+                if roi_slice_nb == i:
+                    sliceOK = i
+                    break
+            x=[]
+            y=[]
+            z=[]			                            
+            m=s.ContourData
             
     for i in range(0,len(m),3):
-		x.append(m[i+1])
-		y.append(m[i+0])
-		z.append(m[i+2])
+        x.append(m[i+1])
+        y.append(m[i+0])
+        z.append(m[i+2])
 	
     x=np.array(x)
     y=np.array(y)

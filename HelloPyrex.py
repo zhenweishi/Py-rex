@@ -30,7 +30,7 @@ Read parameter file of Pyrex:
 try:
 	paramsFile = os.path.join(os.getcwd(),'ParamsSettings','Pyradiomics_Params.yaml')
 except:
-	print 'Error: Could not find params file of Pyradiomics!'
+	print ('Error: Could not find params file of Pyradiomics!')
 
 # Reading the parameter file of Pyrex
 try:
@@ -45,13 +45,13 @@ try:
     export_format = p['export_format'][0]
     export_name = p['export_name'][0]
 except:
-	print 'Error: Could not find params file of Pyrex!'
+	print('Error: Could not find params file of Pyrex!')
 
 # fuzzy match the input ROI to the ROI in RTstruct
 try:
     target = PyrexReader.ROI_match(ROI,RT_path)
 except:
-    print 'Error: ROI extraction failed'
+    print('Error: ROI extraction failed')
 
 PatientID = 'Pyradiomics_patient'
 
@@ -61,7 +61,7 @@ try:
         Image,Mask = PyrexReader.Img_Bimask(Img_path,RT_path,target[k]) #create image array and binary mask
         featureVector = PyrexWithParams.CalculationRun(Image,Mask,paramsFile) #compute radiomics
         featureVector.update({'Patient':PatientID,'ROI':target[k]}) #add patient ID and contour
-        print 'Radiomcis calculation on %s' % target[k]
+        print ('Radiomcis calculation on %s') % target[k]
         if export_format == 'csv' and k==0:
             with open(os.path.join(exportDir,export_name),'wb') as mydata:
                 w = csv.DictWriter(mydata,featureVector.keys())
@@ -69,6 +69,6 @@ try:
                 w.writerow(featureVector)
         else:
             PyrexOutput.RadiomicsStore(featureVector,exportDir,PatientID,target[k],export_format,export_name) #store radiomics locally with a specific format
-    print 'Calculation done'
+    print('Calculation done')
 except:
-    print 'Error: Failed'
+    print('Error: Failed')
