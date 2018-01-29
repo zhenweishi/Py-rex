@@ -61,9 +61,9 @@ try:
         Image,Mask = PyrexReader.Img_Bimask(Img_path,RT_path,target[k]) #create image array and binary mask
         featureVector = PyrexWithParams.CalculationRun(Image,Mask,paramsFile) #compute radiomics
         featureVector.update({'Patient':PatientID,'ROI':target[k]}) #add patient ID and contour
-        print ('Radiomcis calculation on %s') % target[k]
+        print('Radiomcis calculation on %s' % target[k])
         if export_format == 'csv' and k==0:
-            with open(os.path.join(exportDir,export_name),'wb') as mydata:
+            with open(os.path.join(exportDir,export_name),'w') as mydata:
                 w = csv.DictWriter(mydata,featureVector.keys())
                 w.writeheader()
                 w.writerow(featureVector)
