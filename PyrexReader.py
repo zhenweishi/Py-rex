@@ -47,7 +47,7 @@ def ROI_match(ROI,rtstruct_path):
             print(M.StructureSetROISequence[j].ROIName)
             break
         print('Input ROI is: ')
-        ROI_name = raw_input()
+        ROI_name = input()
         target.append(ROI_name)
     print('------------------------------------')
     return target
