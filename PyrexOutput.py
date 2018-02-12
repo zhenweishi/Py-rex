@@ -6,7 +6,6 @@
 
 from rdflib import Graph, Literal
 from rdflib.namespace import Namespace,URIRef
-#from datetime import datetime
 import json
 import os
 import csv
@@ -21,9 +20,7 @@ def RadiomicsStore(featureVector,exportDir,PatientID,ROI,export_format,export_na
             w.writeheader()
             w.writerow(featureVector)
             
-    elif export_format == 'rdf':
-	
-		#print "RDF Output:"
+    elif export_format == 'rdf': #print "RDF Output:"
 		g = Graph() # Create a rdflib graph object
 		feature_type = [] # Create a list for feature type
 		feature_uri = [] # Create a list for feature uri (ontology)
@@ -36,7 +33,6 @@ def RadiomicsStore(featureVector,exportDir,PatientID,ROI,export_format,export_na
 				feature_uri.append(row[1])
         # Adding Radiomics Ontology to namespace
 		ro = Namespace('http://www.radiomics.org/RO/')
-		# 
 		g.bind('ro',ro)
 
 		CalculationRun = URIRef('http://www.radiomics.org/RO/0101')
@@ -49,7 +45,7 @@ def RadiomicsStore(featureVector,exportDir,PatientID,ROI,export_format,export_na
 		# A dictionary contains the radiomic feature that has a unit
 		dict_unit = {'original_shape_Volume':'mm^3','original_shape_SurfaceArea': 'mm^2','original_shape_Maximum3DDiameter': 'mm'}
 		
-		#
+		# Adding to graph
 		for i in range(len(radiomics_key)):
 			ind = feature_type.index(radiomics_key[i])
 			tmp_uri = feature_uri[ind]
@@ -62,4 +58,4 @@ def RadiomicsStore(featureVector,exportDir,PatientID,ROI,export_format,export_na
 				tmp_unit = Literal(dict_unit[radiomics_key[i]])
 				g.add((feature_ontology,has_unit,tmp_unit))
     
-		print g.serialize(exportDir + os.sep +"RF_"+ '_'+ ROI + PatientID + ".ttl", format='turtle')		
+		g.serialize(exportDir + os.sep + export_name + ".ttl", format='turtle')		

@@ -22,6 +22,6 @@ ROI:
 - '[Ss][Uu][Vv]'
 #- '[Gt][Tv][Vv][-][1]'
 export_format:
-- csv
+- rdf
 export_name:
-- 'Hello_Pyrex.csv'
+- 'Hello_PyrexZW.ttl'
