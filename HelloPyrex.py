@@ -30,9 +30,10 @@ start_time = time.time()
 
 # Reading Params file of Pyradiomics
 try:
-	paramsFile = os.path.join(os.getcwd(),'ParamsSettings','Pyradiomics_Params.yaml')
+  paramsFile = os.path.join(os.getcwd(),'ParamsSettings','Pyradiomics_Params.yaml')
 except:
 	print('Error: Could not find params file of Pyradiomics!')
+
 
 # Reading the parameter file of Pyrex
 try:
@@ -63,9 +64,10 @@ try:
         Image,Mask = PyrexReader.Img_Bimask(Img_path,RT_path,target[k]) #create image array and binary mask
         featureVector = PyrexWithParams.CalculationRun(Image,Mask,paramsFile) #compute radiomics
 #        featureVector.update({'Patient':PatientID,'ROI':target[k]}) #add patient ID and contour
-        print('Radiomcis calculation on %s' % target[k])
+
+        print('Radiomics calculation on %s' % target[k])
         if export_format == 'csv' and k==0:
-            with open(os.path.join(exportDir,export_name),'wb') as mydata:
+            with open(os.path.join(exportDir,export_name),'w') as mydata:
                 w = csv.DictWriter(mydata,featureVector.keys())
                 w.writeheader()
                 w.writerow(featureVector)
