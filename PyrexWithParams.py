@@ -94,22 +94,6 @@ def CalculationRun(imageName,maskName,paramsFile):
 
     # Uncomment one of these functions to show how PyRadiomics can use the 'tqdm' or 'click' package to report progress when
     # running in full python mode. Assumes the respective package is installed (not included in the requirements)
-
-    # tqdmProgressbar()
-    # clickProgressbar()
     print("Calculating features:")
-    for cls, features in six.iteritems(extractor._enabledFeatures):
-        if not features:
-            features = [f for f, deprecated in six.iteritems(extractor.getFeatureNames(cls)) if not deprecated]
-		#features = extractor.getFeatureNames(cls)
-    #  for f in features:
-    #	print(f)
-    #	print(getattr(extractor.featureClasses[cls], 'get%sFeatureValue' % f).__doc__)
-
-    #print("Calculating features")
     featureVector = extractor.execute(imageName, maskName)
-
-    #for featureName in featureVector.keys():
-    #  print("Computed %s: %s" % (featureName, featureVector[featureName]))
-	  
     return featureVector

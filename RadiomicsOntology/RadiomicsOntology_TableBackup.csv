@@ -113,7 +113,6 @@ original_gldm_LargeDependenceLowGrayLevelEmphasis,http://www.radiomics.org/RO/
 original_gldm_DependenceVariance,http://www.radiomics.org/RO/
 original_gldm_LargeDependenceHighGrayLevelEmphasis,http://www.radiomics.org/RO/
 original_gldm_SmallDependenceLowGrayLevelEmphasis,http://www.radiomics.org/RO/
-original_gldm_GrayLevelNonUniformityNormalized,http://www.radiomics.org/RO/
 original_gldm_LowGrayLevelEmphasis,http://www.radiomics.org/RO/
 original_ngtdm_Coarseness,http://www.radiomics.org/RO/
 original_ngtdm_Complexity,http://www.radiomics.org/RO/
