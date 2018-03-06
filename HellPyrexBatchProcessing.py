@@ -8,7 +8,7 @@ import PyrexWithParams
 import PyrexOutput
 import os
 import yaml
-from PyreXNAT import ParseStructure, xnat_collection
+from PyrexXNAT import ParseStructure, xnat_collection
 #import logging
 import csv
 '''
