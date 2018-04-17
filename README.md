@@ -1,3 +1,6 @@
+
+## stopting updating. Py-rex is not available. A big change is coming!!!
+
 ## Py-rex (Pyradiomics extension) Version 1.3
 
 This is an open-source python package for [pyradiomics](https://github.com/Radiomics/pyradiomics) extension on both input and output sides.

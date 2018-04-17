@@ -1,6 +1,0 @@
-@prefix : <http://people.example/> .
-
-:alice :name "Alice", "Alice Foo", "A. Foo" .
-:alice :knows :bob, :carol .
-:bob :name "Bob", "Bob Bar", "B. Bar" .
-:carol :name "Carol", "Carol Baz", "C. Baz" .
