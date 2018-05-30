@@ -1,5 +1,5 @@
 
-## stopting updating. Py-rex is not available. A big change is coming!!!
+## Stopt updating. Py-rex has been merged to Ontology-guided Radiomics Analysis Workflow ([O-RAW](https://github.com/zhenweishi/O-RAW))!!!
 
 ## Py-rex (Pyradiomics extension) Version 1.3
 
