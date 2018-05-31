@@ -13,7 +13,6 @@ With this pacakge we aim to allow users to use origial DICOM file and RTSTRUCT f
 7. Allow batch processing.
 
 
-```
 ### License
 
 Py-rex may not be used for commercial purposes. This package is freely available to browse, download, and use for scientific 
