@@ -26,11 +26,9 @@ def match_ROIid(rtstruct_path,ROI_name): # Match ROI id in RTSTURCT to a given R
     for i in range(len(M.StructureSetROISequence)):
         if str(ROI_name)==M.StructureSetROISequence[i].ROIName:
             ROI_number = M.StructureSetROISequence[i].ROINumber
-#            print(ROI_number)
             break
     for ROI_id in range(len(M.StructureSetROISequence)):
         if ROI_number == M.ROIContourSequence[ROI_id].ReferencedROINumber:
-#            print(ROI_number)
             break
     return ROI_id
 
@@ -43,12 +41,12 @@ def ROI_match(ROI,rtstruct_path): # Literal match ROI
             target.append(M.StructureSetROISequence[i].ROIName)		
     if len(target)==0:
         for j in range(0,len(M.StructureSetROISequence)):
-            print M.StructureSetROISequence[j].ROIName
+            print(M.StructureSetROISequence[j].ROIName)
             break
         print('Input ROI is: ')
         ROI_name = raw_input()
         target.append(ROI_name)
-    print '------------------------------------'
+    print('------------------------------------')
     return target
 
 def Read_scan(path): # Read scans under the specified path 
@@ -93,7 +91,6 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name): # generating image array and bi
     print('Generating binary mask based on ROI: %s ......' % ROI_name)
     img_vol = Read_scan(img_path)
     mask_vol=Read_RTSTRUCT(rtstruct_path)
-
     IM=img_vol[0] # Slices usually have the same basic information including slice size, patient position, etc.
     IM_P=get_pixels_hu(img_vol)
     M=mask_vol[0]
@@ -106,45 +103,43 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name): # generating image array and bi
     ROI_id = match_ROIid(rtstruct_path,ROI_name)
     #Check DICOM file Modality
     if IM.Modality == 'CT' or 'PT':
-		for k in range(len(M.ROIContourSequence[ROI_id].ContourSequence)):    
-			Cpostion_rt = M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData[2]
-            
-			for i in range(num_slice):
-				if Cpostion_rt == img_vol[i].ImagePositionPatient[2]: # match the binary mask and the corresponding slice
-					sliceOK = i
-					break
-			x=[]
-			y=[]
-			z=[]
-			m=M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData
-			for i in range(0,len(m),3):
-				x.append(m[i+1])
-				y.append(m[i+0])
-				z.append(m[i+2])
-        
-			x=np.array(x)
-			y=np.array(y)
-			z=np.array(z)
-			x-= IM.ImagePositionPatient[1]
-			y-= IM.ImagePositionPatient[0]
-			z-= IM.ImagePositionPatient[2]
-			pts = np.zeros([len(x),3])  
-			pts[:,0] = x
-			pts[:,1] = y
-			pts[:,2] = z
-			a=0
-			b=1
-			p1 = xres
-			p2 = yres
-			m=np.zeros([2,2])             
-			m[0,0]=img_vol[sliceOK].ImageOrientationPatient[a]*p1 
-			m[0,1]=img_vol[sliceOK].ImageOrientationPatient[a+3]*p2
-			m[1,0]=img_vol[sliceOK].ImageOrientationPatient[b]*p1
-			m[1,1]=img_vol[sliceOK].ImageOrientationPatient[b+3]*p2
-         # Transform points from reference frame to image coordinates
-			m_inv=np.linalg.inv(m)
-			pts = (np.matmul((m_inv),(pts[:,[a,b]]).T)).T
-			mask[sliceOK,:,:] = np.logical_or(mask[sliceOK,:,:],poly2mask(pts[:,0],pts[:,1],[IM_P.shape[1],IM_P.shape[2]]))
+        for k in range(len(M.ROIContourSequence[ROI_id].ContourSequence)):
+            Cpostion_rt = M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData[2]
+            for i in range(num_slice):
+                if np.int64(Cpostion_rt) == np.int64(img_vol[i].ImagePositionPatient[2]): # match the binary mask and the corresponding slice
+                    sliceOK = i
+                    break
+            x=[]
+            y=[]
+            z=[]
+            m=M.ROIContourSequence[ROI_id].ContourSequence[k].ContourData
+            for i in range(0,len(m),3):
+                x.append(m[i+1])
+                y.append(m[i+0])
+                z.append(m[i+2])
+            x=np.array(x)
+            y=np.array(y)
+            z=np.array(z)
+            x-= IM.ImagePositionPatient[1]
+            y-= IM.ImagePositionPatient[0]
+            z-= IM.ImagePositionPatient[2]
+            pts = np.zeros([len(x),3])
+            pts[:,0] = x
+            pts[:,1] = y
+            pts[:,2] = z
+            a=0
+            b=1
+            p1 = xres
+            p2 = yres
+            m=np.zeros([2,2])
+            m[0,0]=img_vol[sliceOK].ImageOrientationPatient[a]*p1
+            m[0,1]=img_vol[sliceOK].ImageOrientationPatient[a+3]*p2
+            m[1,0]=img_vol[sliceOK].ImageOrientationPatient[b]*p1
+            m[1,1]=img_vol[sliceOK].ImageOrientationPatient[b+3]*p2
+          # Transform points from reference frame to image coordinates           
+            m_inv=np.linalg.inv(m)
+            pts = (np.matmul((m_inv),(pts[:,[a,b]]).T)).T
+            mask[sliceOK,:,:] = np.logical_or(mask[sliceOK,:,:],poly2mask(pts[:,0],pts[:,1],[IM_P.shape[1],IM_P.shape[2]]))
     elif IM.Modality == 'MR':
         slice_0 = img_vol[0]
         slice_n = img_vol[-1]
@@ -162,53 +157,49 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name): # generating image array and bi
         transform_matrix[:, 1] *= pix_s[0]
         
         transform_matrix = np.linalg.inv(transform_matrix)
-        for s in M.ROIContourSequence[ROI_id].ContourSequence:    
-			Cpostion_rt = np.r_[s.ContourData[:3], 1] # the ROI point to get slice number from
-													  # in homogenous coordinates
-
-			roi_slice_nb = int(transform_matrix.dot(Cpostion_rt)[2]) # the slice number according to the 
-																	 # inverse transform
-			for i in range(num_slice):
-				print(roi_slice_nb, i)
-				if roi_slice_nb == i:
-					sliceOK = i
-					break
-			x=[]
-			y=[]
-			z=[]			                            
-			m=s.ContourData
-			for i in range(0,len(m),3):
-				x.append(m[i+1])
-				y.append(m[i+0])
-				z.append(m[i+2])
-    	
-			x=np.array(x)
-			y=np.array(y)
-			z=np.array(z)
-			x-= IM.ImagePositionPatient[1]
-			y-= IM.ImagePositionPatient[0]
-			z-= IM.ImagePositionPatient[2]
-			pts = np.zeros([len(x),3])	
-			pts[:,0] = x
-			pts[:,1] = y
-			pts[:,2] = z
-			a=0
-			b=1
-			p1 = xres
-			p2 = yres
-			m=np.zeros([2,2])             
-			m[0,0]=img_vol[sliceOK].ImageOrientationPatient[a]*p1 
-			m[0,1]=img_vol[sliceOK].ImageOrientationPatient[a+3]*p2
-			m[1,0]=img_vol[sliceOK].ImageOrientationPatient[b]*p1
-			m[1,1]=img_vol[sliceOK].ImageOrientationPatient[b+3]*p2
-			# Transform points from reference frame to image coordinates
-			m_inv=np.linalg.inv(m)
-			pts = (np.matmul((m_inv),(pts[:,[a,b]]).T)).T
-			mask[sliceOK,:,:] = np.logical_or(mask[sliceOK,:,:],poly2mask(pts[:,0],pts[:,1],[IM_P.shape[1],IM_P.shape[2]]))
+        for s in M.ROIContourSequence[ROI_id].ContourSequence:
+            Cpostion_rt = np.r_[s.ContourData[:3], 1]
+            roi_slice_nb = int(transform_matrix.dot(Cpostion_rt)[2])
+            for i in range(num_slice):
+                print(roi_slice_nb, i)
+                if roi_slice_nb == i:
+                    sliceOK = i
+                    break
+            x=[]
+            y=[]
+            z=[]
+            m=s.ContourData
+            for i in range(0,len(m),3):
+                x.append(m[i+1])
+                y.append(m[i+0])
+                z.append(m[i+2])
+            x=np.array(x)
+            y=np.array(y)
+            z=np.array(z)
+            x-= IM.ImagePositionPatient[1]
+            y-= IM.ImagePositionPatient[0]
+            z-= IM.ImagePositionPatient[2]
+            pts = np.zeros([len(x),3])
+            pts[:,0] = x
+            pts[:,1] = y
+            pts[:,2] = z
+            a=0
+            b=1
+            p1 = xres
+            p2 = yres
+            m=np.zeros([2,2])
+            m[0,0]=img_vol[sliceOK].ImageOrientationPatient[a]*p1
+            m[0,1]=img_vol[sliceOK].ImageOrientationPatient[a+3]*p2
+            m[1,0]=img_vol[sliceOK].ImageOrientationPatient[b]*p1
+            m[1,1]=img_vol[sliceOK].ImageOrientationPatient[b+3]*p2
+            # Transform points from reference frame to image coordinates
+            m_inv=np.linalg.inv(m)
+            pts = (np.matmul((m_inv),(pts[:,[a,b]]).T)).T
+            mask[sliceOK,:,:] = np.logical_or(mask[sliceOK,:,:],poly2mask(pts[:,0],pts[:,1],[IM_P.shape[1],IM_P.shape[2]]))
     
     # The pixel intensity values are normalized to range [0 255] using linear translation   
     IM_P=IM_P.astype(np.float32)
-    #IM_P = (IM_P-np.min(IM_P))*255/(np.max(IM_P)-np.min(IM_P))  
+    # IM_P = (IM_P-np.min(IM_P))*255/(np.max(IM_P)-np.min(IM_P))  
 
     Img=sitk.GetImageFromArray(IM_P) # convert image_array to image
     Mask=sitk.GetImageFromArray(mask)
@@ -221,8 +212,5 @@ def Img_Bimask(img_path,rtstruct_path,ROI_name): # generating image array and bi
     #slice_thickness = IM.SliceThickness
     Img.SetSpacing([np.float64(xres),np.float64(yres),np.float64(slice_thickness)])
     Mask.SetSpacing([np.float64(xres),np.float64(yres),np.float64(slice_thickness)])
-
-
-#    sitk.WriteImage(Img,image_file_name) # save image and binary mask locally
-#    sitk.WriteImage(Mask,mask_file_name)
+    
     return Img, Mask
