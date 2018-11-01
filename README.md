@@ -1,4 +1,4 @@
-## Py-rex (Pyradiomics extension) Version 1.3
+## Py-rex (Pyradiomics extension) Version 2.1
 
 This is an open-source python package for [pyradiomics](https://github.com/Radiomics/pyradiomics) extension on both input and output sides.
 With this pacakge we aim to allow users to use origial DICOM file and RTSTRUCT for radiomics calculation. 
